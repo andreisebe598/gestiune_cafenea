@@ -97,7 +97,7 @@ virtualenv (opțional, dar recomandat)
 
 1. **Clonează repository-ul**
 ```bash
-git clone https://github.com/username/cafenea-management.git
+git clone https://github.com/andreisebe598/gestiune_cafenea.git
 cd cafenea-management
 ```
 
@@ -162,17 +162,6 @@ DATABASES = {
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-```
-
-### Configurare Email (pentru resetare parolă)
-
-```python
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your-email@gmail.com'
-EMAIL_HOST_PASSWORD = 'your-app-password'
 ```
 
 ## 📖 Utilizare
