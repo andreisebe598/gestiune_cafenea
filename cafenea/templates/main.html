@@ -1,0 +1,39 @@
+
+
+{% extends 'base.html' %}
+
+{% load static %}{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Cafeneaua Mea</h1>
+            <p>Aromă intensă, momente de neuitat.</p>
+            <a href="{% url 'menu' %}" class="btn-gold">Vezi Meniul</a>
+        </div>
+    </div>
+
+    <section class="news-section">
+        <h2 class="section-title">Noutăți și Evenimente</h2>
+        <div class="news-grid">
+            {% for stire in stiri %}
+            <div class="news-card">
+                {% if stire.imagine %}
+                <img src="{{ stire.imagine.url }}" alt="{{ stire.titlu }}">
+                {% else %}
+                <img src="{% static 'images/default-coffee.jpg' %}" alt="Coffee">
+                {% endif %}
+                <div class="news-info">
+                    <span class="news-date">{{ stire.creat_la|date:"d M Y" }}</span>
+                    <h3>{{ stire.titlu }}</h3>
+                    <p>{{ stire.continut|truncatewords:20 }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p>Momentan nu sunt evenimente programate. Te așteptăm la o cafea!</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

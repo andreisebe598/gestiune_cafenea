@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'adauga_stire.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="page-title">Adaugă Știre Nouă</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Titlu</label>
+            {{ form.titlu }}
+        </div>
+
+        <div class="form-group">
+            <label>Descriere / Conținut</label>
+            {{ form.continut }}
+        </div>
+
+        <div class="form-group">
+            <label>Imagine (Opțional)</label>
+            {{ form.imagine }}
+        </div>
+
+        <div class="form-group">
+            <label>Data Evenimentului (Opțional)</label>
+            {{ form.data_eveniment }}
+        </div>
+
+        <div class="checkbox-group">
+            {{ form.este_activa }}
+            <label>Publică pe site? (Activ)</label>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <a href="{% url 'lista_gestiune_stiri' %}" class="btn-save btn-cancel">Anulează</a>
+            <button type="submit" class="btn-save">Publică Știrea</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

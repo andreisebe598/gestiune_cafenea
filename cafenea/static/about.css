@@ -1,0 +1,159 @@
+/* about.css - Stiluri specifice paginii Despre Noi */
+
+.about-page {
+    padding: 60px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* POVESTEA */
+.story-section {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 100px;
+}
+
+.story-text {
+    flex: 1;
+}
+
+.page-title {
+    font-size: 3rem;
+    color: #d4a373;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.highlight-text {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #f5f5f5;
+    margin-bottom: 20px;
+    border-left: 3px solid #d4a373;
+    padding-left: 15px;
+}
+
+.story-text p {
+    color: #ccc;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.story-image {
+    flex: 1;
+}
+
+.story-image img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 20px 20px 0px #1a1a1a;
+    /* Efect de ramă */
+    border: 1px solid #333;
+}
+
+/* STATISTICI */
+.stats-row {
+    display: flex;
+    gap: 30px;
+    margin-top: 40px;
+    border-top: 1px solid #333;
+    padding-top: 30px;
+}
+
+.stat-box {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #d4a373;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #888;
+    text-transform: uppercase;
+}
+
+/* ECHIPA */
+.team-section {
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: #d4a373;
+    margin-bottom: 50px;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+}
+
+.team-card {
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 15px;
+    transition: 0.3s;
+    border: 1px solid #333;
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+    border-color: #d4a373;
+}
+
+.card-img-wrapper {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #d4a373;
+    padding: 3px;
+    /* Spatiu intre bordura si poza */
+}
+
+.card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.card-content h3 {
+    color: #f5f5f5;
+    margin-bottom: 5px;
+    font-size: 1.4rem;
+}
+
+.role {
+    display: block;
+    color: #d4a373;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.hired-date {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .story-section {
+        flex-direction: column;
+    }
+
+    .story-image img {
+        box-shadow: 10px 10px 0px #1a1a1a;
+    }
+}

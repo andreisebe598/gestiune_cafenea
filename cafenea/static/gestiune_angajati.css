@@ -1,0 +1,189 @@
+/* gestiune_angajati.css */
+
+.gestiune-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.gestiune-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-title {
+    color: #d4a373;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.btn-action {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-add {
+    background: #d4a373;
+    color: #1f1712;
+}
+
+.btn-add:hover {
+    background: #fff;
+    transform: translateY(-2px);
+}
+
+/* TABEL */
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid #3e2e28;
+}
+
+.coffee-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #2b1d16;
+    color: #a89f91;
+    min-width: 800px;
+}
+
+.coffee-table th {
+    background: #1f1712;
+    color: #d4a373;
+    padding: 15px;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #d4a373;
+}
+
+.coffee-table td {
+    padding: 15px;
+    border-bottom: 1px solid #3e2e28;
+    vertical-align: middle;
+}
+
+.coffee-table tr:hover {
+    background: #362822;
+}
+
+/* --- CLASE NOI (înlocuiesc stilurile inline) --- */
+
+/* Rând pentru angajați inactivi */
+.inactive-row {
+    opacity: 0.6;
+    background: #261e1b;
+}
+
+/* Celula Nume */
+.name-cell {
+    font-weight: bold;
+    color: #f2e8dc;
+}
+
+/* Celula Salariu */
+.salary-cell {
+    color: #d4a373;
+    font-weight: 500;
+}
+
+/* Info Contact */
+.contact-info {
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.email-text {
+    color: #888;
+}
+
+/* Badge-uri */
+.badge-cat {
+    background: #3e2e28;
+    color: #f2e8dc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    border: 1px solid #5c473d;
+    white-space: nowrap;
+}
+
+.stock-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.stock-ok {
+    color: #2ecc71;
+    background: rgba(46, 204, 113, 0.1);
+}
+
+.stock-out {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+}
+
+/* Actiuni */
+.actions-cell {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: 0.2s;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.btn-icon.edit:hover {
+    background: rgba(212, 163, 115, 0.2);
+}
+
+.btn-icon.delete:hover {
+    background: rgba(231, 76, 60, 0.2);
+}
+
+.form-delete {
+    display: inline;
+}
+
+/* Link Inapoi (josul paginii) */
+.back-link-wrapper {
+    margin-top: 20px;
+}
+
+.back-link {
+    color: #d4a373;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.back-link:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Responsivitate Header */
+@media (max-width: 768px) {
+    .gestiune-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}

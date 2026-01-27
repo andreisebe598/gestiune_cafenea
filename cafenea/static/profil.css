@@ -1,0 +1,147 @@
+.profile-container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+/* Cardurile (Stanga/Dreapta) */
+.profile-card,
+.history-card {
+    background: #1a1a1a;
+    /* Gri foarte inchis */
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid #333;
+    /* Chenar subtil */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    /* Umbra eleganta */
+}
+
+/* Titluri */
+.profile-title {
+    color: #d4a373;
+    /* Auriu */
+    font-size: 2rem;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.form-section-title {
+    color: #fff;
+    font-size: 1.1rem;
+    margin: 30px 0 15px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-left: 3px solid #d4a373;
+    padding-left: 10px;
+}
+
+/* --- STILIZARE INPUTURI (Aici e magia) --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #bbb;
+    /* Gri deschis pentru etichete */
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+/* Clasa .form-input vine din forms.py */
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #0f0f0f;
+    /* Fundal negru */
+    border: 1px solid #444;
+    /* Chenar gri inchis */
+    border-radius: 8px;
+    color: #f5f5f5;
+    /* Text alb */
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+/* Cand dai click pe input */
+.form-input:focus {
+    outline: none;
+    border-color: #d4a373;
+    /* Chenar auriu la focus */
+    box-shadow: 0 0 10px rgba(212, 163, 115, 0.2);
+}
+
+/* Input-ul de tip Data */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    /* Face iconita de calendar alba */
+    cursor: pointer;
+}
+
+/* Butonul de Salvare */
+.btn-save {
+    width: 100%;
+    padding: 15px;
+    background: #d4a373;
+    color: #000;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.3);
+}
+
+.btn-save:hover {
+    background: #fff;
+    transform: translateY(-2px);
+}
+
+/* Istoric Comenzi */
+.order-item {
+    background: #0f0f0f;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border-left: 4px solid #d4a373;
+    transition: 0.3s;
+}
+
+.order-item:hover {
+    background: #141414;
+    transform: translateX(5px);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    color: #d4a373;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.order-details {
+    font-size: 0.95rem;
+    color: #aaa;
+    line-height: 1.5;
+}
+
+/* Responsivitate */
+@media (max-width: 900px) {
+    .profile-container {
+        grid-template-columns: 1fr;
+    }
+}

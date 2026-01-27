@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'gestiune_comenzi.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="gestiune-container">
+    <div class="gestiune-header">
+        <h1 class="page-title">Registru Comenzi</h1>
+    </div>
+
+    <div class="search-container">
+        <form method="get" class="search-form">
+            <input type="text" name="q" class="search-input" placeholder="Caută după Nume Client sau ID Comandă..."
+                value="{{ search_query }}">
+            <button type="submit" class="search-btn">🔍 Caută</button>
+
+            {% if search_query %}
+            <a href="{% url 'lista_gestiune_comenzi' %}" class="reset-btn">❌ Resetează</a>
+            {% endif %}
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="coffee-table">
+            <thead>
+                <tr>
+                    <th>ID Comandă</th>
+                    <th>Client</th>
+                    <th>Data & Ora</th>
+                    <th>Total</th>
+                    <th>Angajat Procesator</th>
+                    <th>Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comanda in comenzi %}
+                <tr>
+                    <td class="id-cell">#{{ comanda.id }}</td>
+
+                    <td class="client-name">
+                        {{ comanda.client.nume }}
+                    </td>
+
+                    <td>{{ comanda.data_comenzii|date:"d.m.Y H:i" }}</td>
+
+                    <td class="total-cell">{{ comanda.total_comanda|floatformat:2 }} RON</td>
+
+                    <td>{{ comanda.angajat.nume }} {{ comanda.angajat.prenume }}</td>
+
+                    <td class="actions-cell">
+                        <a href="{% url 'detalii_comanda' comanda.id %}" class="btn-icon view" title="Vezi Detalii">
+                            👁️
+                        </a>
+
+                        <form action="{% url 'sterge_comanda' comanda.id %}" method="post"
+                            onsubmit="return confirm('Ștergi comanda #{{ comanda.id }}?');" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon delete" title="Șterge">
+                                🗑️
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 30px;">
+                        {% if search_query %}
+                        Nu am găsit nicio comandă pentru "<strong>{{ search_query }}</strong>".
+                        {% else %}
+                        Nu există comenzi înregistrate.
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <a href="{% url 'dashboard' %}" style="color: #d4a373; text-decoration: none;">&larr; Înapoi la Dashboard</a>
+    </div>
+</div>
+{% endblock %}

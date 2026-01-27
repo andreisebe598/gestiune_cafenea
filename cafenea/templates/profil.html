@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'profil.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+
+    <div class="profile-card">
+        <h2 class="profile-title">Datele Tale</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <h3 class="form-section-title">Informații Cont</h3>
+            {% for field in u_form %}
+            <div class="form-group">
+                <label>{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endfor %}
+
+            <h3 class="form-section-title">Preferințe & Detalii</h3>
+            {% for field in c_form %}
+            <div class="form-group">
+                <label>{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-save">Salvează Modificările</button>
+        </form>
+    </div>
+
+    <div class="history-card">
+        <h2 class="profile-title">Istoric Comenzi</h2>
+
+        {% if comenzi %}
+        {% for comanda in comenzi %}
+        <div class="order-item">
+            <div class="order-header">
+                <span>Comanda #{{ comanda.id }}</span>
+                <span>{{ comanda.data_comenzii|date:"d M Y" }}</span>
+            </div>
+            <div class="order-details">
+                <p>Total: {{ comanda.total_comanda }} RON</p>
+                <p>Produse:
+                    {% for item in comanda.elemente.all %}
+                    {{ item.produs.denumire }} (x{{ item.cantitate }}){% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p style="color: #888;">Nu ai plasat încă nicio comandă.</p>
+        <a href="{% url 'menu' %}" style="color: #d4a373;">Mergi la Meniu</a>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

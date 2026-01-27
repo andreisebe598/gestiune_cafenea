@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'about.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="about-page">
+
+    <section class="story-section">
+        <div class="story-text">
+            <h1 class="page-title">Povestea Noastra</h1>
+            <p class="highlight-text">"Nu vindem doar cafea, ci creăm dimineți perfecte."</p>
+            <p>
+                Totul a început din pasiunea pentru boabele proaspăt prăjite.
+                Ne-am dorit un loc în inima orașului unde timpul stă în loc, iar aroma de
+                Arabica te face să uiți de deadline-uri.
+            </p>
+            <p>
+                Folosim echipamente de ultimă generație și colaborăm direct cu fermieri
+                pentru a aduce în ceașca ta cele mai bune origini din lume.
+            </p>
+
+            <div class="stats-row">
+                <div class="stat-box">
+                    <span class="stat-number">3+</span>
+                    <span class="stat-label">Ani de experiență</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">15k</span>
+                    <span class="stat-label">Cafele servite</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Pasiune</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="story-image">
+            <img src="{% static 'images/about-story.jpg' %}" alt="Interior Cafenea">
+        </div>
+    </section>
+
+    <section class="team-section">
+        <h2 class="section-title">Cunoaște Maeștrii Cafelei</h2>
+        <div class="team-grid">
+            {% for om in echipa %}
+
+            {% if om.nume != 'Comenzi' %}
+            <div class="team-card">
+                <div class="card-img-wrapper">
+                    {% if om.poza %}
+                    <img src="{{ om.poza.url }}" alt="{{ om.nume }}">
+                    {% else %}
+                    <img src="{% static 'images/barista-default.png' %}" alt="Barista">
+                    {% endif %}
+                </div>
+
+                <div class="card-content">
+                    <h3>{{ om.nume }} {{ om.prenume }}</h3>
+                    <span class="role">{{ om.functie }}</span>
+
+                    <p class="hired-date">În echipă din: {{ om.data_angajarii|date:"Y" }}</p>
+                </div>
+            </div>
+            {% endif %}{% empty %}
+            <p>Nu există angajați activi momentan.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+</div>
+{% endblock %}

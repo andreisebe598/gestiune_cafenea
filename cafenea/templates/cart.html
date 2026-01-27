@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <h1 class="cart-title">Coșul Tău de Cumpărături</h1>
+
+    {% if cart|length > 0 %}
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Produs</th>
+                <th>Preț</th>
+                <th>Cantitate</th>
+                <th>Total</th>
+                <th>Acțiuni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+            <tr>
+                <td>{{ item.product.get_denumire_display }}</td>
+                <td>{{ item.price }} RON</td>
+                <td>{{ item.cantitate }}</td>
+                <td>{{ item.total_price }} RON</td>
+                <td>
+                    <a href="{% url 'cart_remove' item.product.id %}" class="btn-remove">Șterge</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="cart-summary">
+        <p>Total de Plată: <span class="total-price">{{ cart.get_total_price }} RON</span></p>
+    </div>
+
+    <div class="action-btns">
+        <a href="{% url 'menu' %}" class="btn-action btn-continue">← Continuă Cumpărăturile</a>
+
+        {% if user.is_authenticated %}
+        <a href="{% url 'checkout' %}" class="btn-action btn-checkout">Plasează Comanda →</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn-action btn-checkout" style="background: #e74c3c; color: white;">
+            Autentifică-te pentru a comanda
+        </a>
+        {% endif %}
+    </div>
+
+    {% else %}
+    <div style="text-align: center; padding: 50px;">
+        <p style="color: #888; font-size: 1.2rem;">Coșul tău este gol.</p>
+        <br>
+        <a href="{% url 'menu' %}" class="btn-action btn-checkout">Vezi Meniul</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

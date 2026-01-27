@@ -1,0 +1,183 @@
+/* dashboard.css - Layout Reparat & Warm Theme */
+:root {
+    --bg-dark: #1f1712;
+    /* Dark Espresso */
+    --card-bg: #2b1d16;
+    /* Roasted Bean */
+    --gold-accent: #d4a373;
+    /* Caramel */
+    --text-main: #f2e8dc;
+    /* Latte Foam */
+    --profit-green: #4ade80;
+    --expense-red: #f87171;
+}
+
+.dashboard-container {
+    background-color: var(--bg-dark);
+    padding: 2rem;
+    min-height: 100vh;
+    color: var(--text-main);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* --- HEADER (Aici am reparat pozitia butoanelor) --- */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    /* Titlu Stanga - Grup Butoane Dreapta */
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.dashboard-title {
+    color: var(--gold-accent);
+    margin-bottom: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.8rem;
+}
+
+/* Container pentru butoane (le tine impreuna) */
+.header-actions {
+    display: flex;
+    gap: 15px;
+    /* Spatiu intre butoane */
+}
+
+/* Stil Buton Adauga */
+.btn-add {
+    background-color: #d4a373;
+    color: #1f1712;
+    /* Text maro inchis */
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(212, 163, 115, 0.2);
+    white-space: nowrap;
+    transition: 0.3s;
+    border: none;
+    display: inline-block;
+}
+
+.btn-add:hover {
+    background-color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* --- CARDURI STATISTICI --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border-left: 5px solid var(--gold-accent);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card.income {
+    border-color: var(--gold-accent);
+}
+
+.stat-card.expenses {
+    border-color: var(--expense-red);
+}
+
+.stat-card.profit {
+    border-color: var(--profit-green);
+}
+
+.value {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+/* Gauge Style */
+.gauge-container {
+    background: #3e2e28;
+    height: 8px;
+    border-radius: 4px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.gauge-bar {
+    background: var(--profit-green);
+    height: 100%;
+    transition: width 1s ease-in-out;
+}
+
+/* --- GRAFICE --- */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.chart-box {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 15px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.chart-box h3 {
+    color: var(--gold-accent);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* --- RESPONSIVITATE (MOBIL) --- */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        text-align: center;
+        align-items: stretch;
+        /* Intinde elementele pe toata latimea */
+    }
+
+    .header-actions {
+        flex-direction: column;
+        /* Butoanele unul sub altul pe mobil */
+        width: 100%;
+        gap: 10px;
+    }
+
+    .dashboard-title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .btn-add {
+        width: 100%;
+        /* Buton cat tot ecranul */
+        text-align: center;
+        padding: 15px;
+    }
+
+    .stats-grid,
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}

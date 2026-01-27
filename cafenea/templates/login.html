@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h2>Acces Personal</h2>
+
+        {% if form.errors %}
+            <div class="error-alert">
+                <strong>Eroare! </strong>Numele de utilizator sau parola sunt incorecte
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-field">
+                <label>Utilizator:</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-field">
+                <label>Parolă:</label>
+                {{ form.password }}
+            </div>
+
+            <button type="submit" class="btn-login">Autentificare</button>
+            
+            <div style="margin-top: 15px; font-size: 0.9rem;">
+                <a href="{% url 'reset_password' %}" style="color: #888; text-decoration: none;">Ai uitat parola?</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

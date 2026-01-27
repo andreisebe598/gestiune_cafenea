@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'gestiune.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="gestiune-container">
+    <div class="gestiune-header">
+        <h1 class="page-title">Gestiune Inventar</h1>
+        <a href="{% url 'adauga_produs' %}" class="btn-action btn-add">
+            + Produs Nou
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="coffee-table">
+            <thead>
+                <tr>
+                    <th>Denumire</th>
+                    <th>Categorie</th>
+                    <th>Preț Vânzare</th>
+                    <th>Cost Achiziție</th>
+                    <th>Stoc</th>
+                    <th>Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in produse %}
+                <tr>
+                    <td style="font-weight: bold; color: #f2e8dc;">{{ p.get_denumire_display }}</td>
+                    <td>
+                        <span class="badge-cat">{{ p.get_categorie_display }}</span>
+                    </td>
+                    <td style="color: #d4a373;">{{ p.pret_vanzare }} RON</td>
+                    <td>{{ p.cost_achizitie }} RON</td>
+                    <td>
+                        {% if p.cantitate == 0 %}
+                        <span class="stock-badge stock-out">Epuizat</span>
+                        {% elif p.cantitate < 10 %} <span class="stock-badge stock-low">{{ p.cantitate }} buc</span>
+                            {% else %}
+                            <span class="stock-badge stock-ok">{{ p.cantitate }} buc</span>
+                            {% endif %}
+                    </td>
+                    <td class="actions-cell">
+                        <a href="{% url 'modifica_produs' p.id %}" class="btn-icon edit" title="Editează">
+                            ✏️
+                        </a>
+
+                        <form action="{% url 'sterge_produs' p.id %}" method="post"
+                            onsubmit="return confirm('Ești sigur că vrei să ștergi {{ p.get_denumire_display }}?');"
+                            style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon delete" title="Șterge">
+                                🗑️
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 20px;">Nu există produse în inventar.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <a href="{% url 'dashboard' %}" style="color: #d4a373; text-decoration: none;">&larr; Înapoi la Dashboard</a>
+    </div>
+</div>
+{% endblock %}

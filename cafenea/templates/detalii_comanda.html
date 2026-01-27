@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'gestiune_comenzi.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="gestiune-container">
+
+    <div class="receipt-card">
+        <div class="receipt-header">
+            <h2>CAFENEAUA MEA</h2>
+            <p>Comanda #{{ comanda.id }}</p>
+            <div class="receipt-meta">
+                Data: {{ comanda.data_comenzii|date:"d.m.Y H:i" }}<br>
+                Client: {{ comanda.client.nume }}<br>
+                Casier: {{ comanda.angajat.nume }} {{ comanda.angajat.prenume }}
+            </div>
+        </div>
+
+        <table class="receipt-items">
+            <thead>
+                <tr>
+                    <th>Produs</th>
+                    <th style="text-align: center;">Cant.</th>
+                    <th style="text-align: right;">Preț</th>
+                    <th style="text-align: right;">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in comanda.elemente.all %}
+                <tr>
+                    <td>{{ item.produs.get_denumire_display }}</td>
+                    <td style="text-align: center;">x{{ item.cantitate }}</td>
+                    <td style="text-align: right;">{{ item.produs.pret_vanzare }}</td>
+                    <td style="text-align: right;">{{ item.subtotal }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="receipt-total">
+            TOTAL: {{ comanda.total_comanda|floatformat:2 }} RON
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; font-size: 0.9rem; font-style: italic;">
+            Vă mulțumim și vă mai așteptăm!
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <a href="{% url 'lista_gestiune_comenzi' %}" class="back-btn">&larr; Înapoi la Listă</a>
+    </div>
+
+</div>
+{% endblock %}

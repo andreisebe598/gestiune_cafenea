@@ -1,0 +1,162 @@
+/* menu.css - Paleta Warm Coffee */
+:root {
+    /* SCHIMBARE: Culori Calde */
+    --bg-dark: #261e1b;
+    /* Mochaccino Dark */
+    --card-bg: #362b26;
+    /* Chocolate */
+    --gold-accent: #d4a373;
+    /* Caramel */
+    --text-main: #f2e8dc;
+    /* Latte Foam */
+    --text-muted: #a89f91;
+    /* Warm Grey */
+
+    --success-green: #2ecc71;
+    --warning-yellow: #f1c40f;
+    --danger-red: #e74c3c;
+}
+
+.menu-page {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    padding: 60px 20px;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header Meniu */
+.menu-header {
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.menu-header h1 {
+    color: var(--gold-accent);
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.menu-header p {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
+/* Sectiuni Categorii */
+.menu-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.menu-section {
+    margin-bottom: 60px;
+    /* Adaugam un fundal subtil pentru sectiuni */
+    background: rgba(54, 43, 38, 0.3);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #3e2e28;
+}
+
+.category-title {
+    color: var(--gold-accent);
+    border-bottom: 2px solid var(--gold-accent);
+    display: inline-block;
+    margin-bottom: 30px;
+    padding-bottom: 8px;
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+/* Item Produs */
+.menu-item {
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+}
+
+.item-info {
+    display: flex;
+    align-items: baseline;
+    font-size: 1.3rem;
+    color: #e6dacd;
+    /* Text mai cald */
+}
+
+.item-name {
+    font-weight: 500;
+}
+
+/* Punctele dintre nume si pret - acum maro */
+.item-dots {
+    flex: 1;
+    border-bottom: 1px dotted #5c473d;
+    margin: 0 15px;
+}
+
+.item-price {
+    font-weight: bold;
+    color: var(--gold-accent);
+    min-width: 80px;
+    text-align: right;
+}
+
+/* Badge-uri de Stoc */
+.stock-status {
+    margin-top: 5px;
+}
+
+.badge {
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.in-stock {
+    background-color: rgba(46, 204, 113, 0.1);
+    color: var(--success-green);
+    border: 1px solid var(--success-green);
+}
+
+.low-stock {
+    background-color: rgba(241, 196, 15, 0.1);
+    color: var(--warning-yellow);
+    border: 1px solid var(--warning-yellow);
+}
+
+.no-stock {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--danger-red);
+    border: 1px solid var(--danger-red);
+}
+
+.menu-item.out-of-stock {
+    opacity: 0.5;
+}
+
+.menu-item.out-of-stock .item-name {
+    text-decoration: line-through;
+}
+
+.menu-item:not(.out-of-stock):hover {
+    transform: translateX(10px);
+}
+
+@media (max-width: 600px) {
+    .menu-header h1 {
+        font-size: 2.5rem;
+    }
+
+    .item-info {
+        font-size: 1.1rem;
+    }
+
+    .category-title {
+        font-size: 1.6rem;
+    }
+}

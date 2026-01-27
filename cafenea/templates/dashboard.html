@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'dashboard.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="dashboard-container">
+
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">Dashboard Manager</h1>
+        <div class="header-actions">
+            <a href="{% url 'lista_gestiune_produse' %}" class="btn-add">
+                📦 Gestiune Produse
+            </a>
+            <a href="{% url 'lista_gestiune_angajati' %}" class="btn-add">
+                👔 Gestiune Echipă
+            </a>
+            <a href="{% url 'lista_gestiune_comenzi' %}" class="btn-add">
+                📜 Gestiune Comenzi
+            </a>
+            <a href="{% url 'lista_gestiune_stiri' %}" class="btn-add">
+                📢 Gestiune Știri
+            </a>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card income">
+            <h3>Încasări</h3>
+            <p class="value">{{ incasari|floatformat:2 }} RON</p>
+        </div>
+        <div class="stat-card expenses">
+            <h3>Cheltuieli</h3>
+            <p class="value">{{ cheltuieli|floatformat:2 }} RON</p>
+        </div>
+        <div class="stat-card profit">
+            <h3>Profit Net</h3>
+            <p class="value">{{ profit|floatformat:2 }} RON</p>
+            <div class="gauge-container">
+                <div class="gauge-bar" id="profit-gauge" data-width="{{ marja_profit|floatformat:0 }}"></div>
+            </div>
+            <small>Marjă: {{ marja_profit|floatformat:1 }}%</small>
+        </div>
+    </div>
+
+    <div class="charts-grid">
+        <div class="chart-box">
+            <h3>Top 5 Produse</h3>
+            <div style="position: relative; height: 300px; width: 100%;">
+                <canvas id="productsChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-box">
+            <h3>Activitate Angajați</h3>
+            <div style="position: relative; height: 300px; width: 100%;">
+                <canvas id="staffChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="data-produse" type="application/json">
+    [{% for p in top_produse %}"{{ p.denumire }}"{% if not forloop.last %},{% endif %}{% endfor %}]
+</script>
+<script id="data-cantitati" type="application/json">
+    [{% for p in top_produse %}{{ p.total_vandut }}{% if not forloop.last %},{% endif %}{% endfor %}]
+</script>
+<script id="data-staff" type="application/json">
+    [{% for a in performanta_angajati %}{"n": "{{ a.nume }}", "c": {{ a.nr_comenzi }}}{% if not forloop.last %},{% endif %}{% endfor %}]
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // 1. Gauge
+        const gauge = document.getElementById('profit-gauge');
+        if (gauge) {
+            gauge.style.width = gauge.getAttribute('data-width') + '%';
+        }
+
+        // Setari comune pentru grafice responsive
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false, // Esential pentru mobil!
+            plugins: { legend: { display: false } }
+        };
+
+        // 2. Grafic Produse
+        const labelsP = JSON.parse(document.getElementById('data-produse').textContent);
+        const valuesP = JSON.parse(document.getElementById('data-cantitati').textContent);
+
+        new Chart(document.getElementById('productsChart'), {
+            type: 'bar',
+            data: {
+                labels: labelsP,
+                datasets: [{
+                    label: 'Unități',
+                    data: valuesP,
+                    backgroundColor: '#d4a373',
+                    borderRadius: 5
+                }]
+            },
+            options: commonOptions
+        });
+
+        // 3. Grafic Staff
+        const staffData = JSON.parse(document.getElementById('data-staff').textContent);
+        new Chart(document.getElementById('staffChart'), {
+            type: 'doughnut',
+            data: {
+                labels: staffData.map(item => item.n),
+                datasets: [{
+                    data: staffData.map(item => item.c),
+                    backgroundColor: ['#d4a373', '#bc6c25', '#dda15e', '#606c38']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#fff' }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'gestiune_angajati.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="gestiune-container">
+    <div class="gestiune-header">
+        <h1 class="page-title">Echipa Noastră</h1>
+        <a href="{% url 'adauga_angajat' %}" class="btn-action btn-add">
+            + Angajează
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="coffee-table">
+            <thead>
+                <tr>
+                    <th>Nume Complet</th>
+                    <th>Funcție</th>
+                    <th>Salariu</th>
+                    <th>Contact</th>
+                    <th>Status</th>
+                    <th>Data Angajării</th>
+                    <th>Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for angajat in angajati %}
+                <tr class="{% if not angajat.este_angajat %}inactive-row{% endif %}">
+
+                    <td class="name-cell">
+                        {{ angajat.nume }} {{ angajat.prenume }}
+                    </td>
+
+                    <td>
+                        <span class="badge-cat">{{ angajat.functie }}</span>
+                    </td>
+
+                    <td class="salary-cell">{{ angajat.salariu }} RON</td>
+
+                    <td class="contact-info">
+                        <div>📞 {{ angajat.telefon|default:"-" }}</div>
+                        <div class="email-text">✉️ {{ angajat.email|default:"-" }}</div>
+                    </td>
+
+                    <td>
+                        {% if angajat.este_angajat %}
+                        <span class="stock-badge stock-ok">Activ</span>
+                        {% else %}
+                        <span class="stock-badge stock-out">Inactiv</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ angajat.data_angajarii|date:"d M Y" }}</td>
+
+                    <td class="actions-cell">
+                        <a href="{% url 'modifica_angajat' angajat.id %}" class="btn-icon edit" title="Editează">
+                            ✏️
+                        </a>
+
+                        <form action="{% url 'sterge_angajat' angajat.id %}" method="post" class="form-delete"
+                            onsubmit="return confirm('Ești sigur că vrei să ștergi angajatul {{ angajat.nume }}?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon delete" title="Șterge">
+                                🗑️
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 20px;">Nu există angajați înregistrați.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="back-link-wrapper">
+        <a href="{% url 'dashboard' %}" class="back-link">&larr; Înapoi la Dashboard</a>
+    </div>
+</div>
+{% endblock %}

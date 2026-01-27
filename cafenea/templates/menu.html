@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'menu.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="menu-page">
+    <header class="menu-header">
+        <h1>Meniul Nostru</h1>
+        <p>Cafea de specialitate și delicii artizanale</p>
+    </header>
+
+    <div class="menu-container">
+        {% for cat in categorii %}
+        <section class="menu-section">
+            <h2 class="category-title">{{ cat }}</h2>
+            <div class="products-list">
+
+                {% for p in produse %}
+                {% if p.categorie == cat %}
+
+                <div class="menu-item {% if p.cantitate == 0 %}out-of-stock{% endif %}">
+
+                    <div class="item-main-row"
+                        style="display: flex; align-items: center; justify-content: space-between;">
+
+                        <span class="item-name" style="white-space: nowrap;">{{ p.get_denumire_display }}</span>
+
+                        <span class="item-dots"
+                            style="flex: 1; border-bottom: 1px dotted #555; margin: 0 15px; position: relative; top: -5px;"></span>
+
+                        <div class="right-group" style="display: flex; align-items: center; gap: 15px;">
+
+                            <span class="item-price" style="font-weight: bold; color: #d4a373; white-space: nowrap;">
+                                {{ p.pret_vanzare }} RON
+                            </span>
+
+                            {% if user.is_authenticated and p.cantitate > 0 %}
+                            <a href="{% url 'cart_add' p.id %}" style="
+                                    background: #d4a373;
+                                    color: #000;
+                                    padding: 5px 15px;
+                                    border-radius: 20px;
+                                    text-decoration: none;
+                                    font-weight: bold;
+                                    font-size: 0.8rem;
+                                    white-space: nowrap;
+                                    transition: 0.3s;
+                                ">
+                                + Adauga in cos
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="stock-status" style="margin-top: 5px;">
+                        {% if p.cantitate > 5 %}
+                        <span class="badge in-stock">În stoc</span>
+                        {% elif p.cantitate > 0 %}
+                        <span class="badge low-stock">Stoc limitat ({{ p.cantitate }})</span>
+                        {% else %}
+                        <span class="badge no-stock">Indisponibil</span>
+                        {% endif %}
+                    </div>
+
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

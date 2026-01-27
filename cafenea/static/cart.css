@@ -1,0 +1,145 @@
+/* cart.css - Stiluri Premium Dark/Gold */
+
+.cart-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 20px;
+}
+
+.cart-title {
+    color: #d4a373;
+    text-align: center;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    font-size: 2rem;
+    letter-spacing: 2px;
+}
+
+/* --- TABELUL --- */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    background: #1a1a1a;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cart-table th,
+.cart-table td {
+    padding: 20px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+    color: #ddd;
+}
+
+.cart-table th {
+    background: #0f0f0f;
+    color: #d4a373;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.cart-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Buton Sterge (rosu) */
+.btn-remove {
+    color: #e74c3c;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-remove:hover {
+    color: #ff6b6b;
+    transform: scale(1.1);
+}
+
+/* --- REZUMAT TOTAL --- */
+.cart-summary {
+    text-align: right;
+    margin-top: 20px;
+    padding: 25px;
+    background: #1a1a1a;
+    border-radius: 15px;
+    border: 1px solid #333;
+}
+
+.total-price {
+    font-size: 1.8rem;
+    color: #d4a373;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+/* --- BUTOANE DE ACTIUNE (Jos) --- */
+.action-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.btn-action {
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Buton Stanga: Continua Cumparaturile (Transparent cu contur) */
+.btn-continue {
+    background: transparent;
+    border: 2px solid #d4a373;
+    color: #d4a373;
+}
+
+.btn-continue:hover {
+    background: #d4a373;
+    color: #000;
+    transform: translateX(-5px);
+}
+
+/* Buton Dreapta: Checkout (Auriu plin) */
+.btn-checkout {
+    background: #d4a373;
+    color: black;
+    border: 2px solid #d4a373;
+    /* Ca sa aiba aceeasi marime cu celalalt */
+}
+
+.btn-checkout:hover {
+    background: #fff;
+    border-color: #fff;
+    color: #000;
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(212, 163, 115, 0.4);
+}
+
+/* Responsivitate pentru mobil */
+@media (max-width: 768px) {
+    .action-btns {
+        flex-direction: column-reverse;
+        /* Pune butonul de checkout primul pe mobil */
+        width: 100%;
+    }
+
+    .btn-action {
+        width: 100%;
+    }
+}

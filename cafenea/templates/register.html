@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'register.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="register-container">
+        <div class="register-box">
+            <h2>Creează Cont</h2>
+            <form method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                    <div class="help-text">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% if field.errors %}
+                    <div style="color: #e74c3c; font-size: 0.8rem;">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button type="submit" class="btn-register">Înregistrează-te</button>
+            </form>
+
+            <div class="login-link">
+                Ai deja cont? <a href="{% url 'login' %}">Intră în cont</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

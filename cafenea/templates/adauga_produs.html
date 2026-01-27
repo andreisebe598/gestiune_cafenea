@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'adauga_produs.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="page-title">Adaugă Produs Nou</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Ce produs adăugăm?</label>
+            {{ form.denumire }}
+        </div>
+
+        <div class="form-group">
+            <label>Preț Vânzare (RON)</label>
+            {{ form.pret_vanzare }}
+        </div>
+
+        <div class="form-group">
+            <label>Cost Achiziție (RON)</label>
+            {{ form.cost_achizitie }}
+        </div>
+
+        <div class="form-group">
+            <label>Stoc Inițial (Bucăți)</label>
+            {{ form.cantitate }}
+        </div>
+
+        <button type="submit" class="btn-save">Salvează în Meniu</button>
+    </form>
+</div>
+{% endblock %}

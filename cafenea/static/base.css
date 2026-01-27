@@ -1,0 +1,297 @@
+/* base.css - Stiluri Generale + TEMA COZY (Warm Coffee) */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    /* Fundal Maro Foarte Închis (Espresso) */
+    background: #1f1712;
+    /* Text Crem (Latte Foam) */
+    color: #f2e8dc;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+/* --- NAVIGARE --- */
+nav {
+    width: 100%;
+    padding: 1rem 5%;
+
+    /* SCHIMBARE: Acum are exact culoarea Footer-ului (#16100c), cu 95% opacitate */
+    background: rgba(22, 16, 12, 0.95);
+
+    /* Linie subtilă maro deschis */
+    border-bottom: 1px solid #3e2e28;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #d4a373;
+    /* Auriu (Caramel) */
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.logo:hover {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(212, 163, 115, 0.5);
+}
+
+/* --- HAMBURGER MENU --- */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #d4a373;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+/* --- LINKURI --- */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links li a {
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    /* Bej cald */
+    color: #d3c4b1;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* Efect de subliniere la hover */
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #d4a373;
+    transition: width 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #d4a373;
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+}
+
+/* --- BUTOANE CU EFECTE --- */
+.btns {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Stilul de bază */
+.btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+/* 1. Buton Principal (Auriu) */
+.btn-primary {
+    background: #d4a373;
+    /* Text maro închis pe fundal auriu */
+    color: #1f1712;
+    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.2);
+}
+
+.btn-primary:hover {
+    background: #fff;
+    color: #1f1712;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4);
+}
+
+/* 2. Buton Outline (Transparent) */
+.btn-outline {
+    background: transparent;
+    border: 2px solid #d4a373;
+    color: #d4a373;
+}
+
+.btn-outline:hover {
+    background: #d4a373;
+    color: #1f1712;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(212, 163, 115, 0.3);
+}
+
+/* 3. Buton Dark (Coș) */
+.btn-dark {
+    background: #362822;
+    /* Coffee Bean */
+    border: 2px solid #4a362f;
+    color: #f2e8dc;
+}
+
+.btn-dark:hover {
+    background: #d4a373;
+    border-color: #d4a373;
+    color: #1f1712;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(212, 163, 115, 0.3);
+}
+
+/* --- FOOTER --- */
+footer {
+    text-align: center;
+    padding: 20px;
+    /* Footer maro foarte închis (#16100c) */
+    background: #16100c;
+    color: #8c7b70;
+    /* Text Taupe */
+    border-top: 1px solid #3e2e28;
+    margin-top: auto;
+    font-size: 0.8rem;
+}
+
+/* --- RESPONSIVITATE (MOBIL) --- */
+@media (max-width: 900px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-links,
+    .btns {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    nav.active .nav-links {
+        display: flex;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #3e2e28;
+    }
+
+    nav.active .btns {
+        display: flex;
+        padding-top: 20px;
+    }
+
+    nav.active .hamburger span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    nav.active .hamburger span:nth-child(2) {
+        opacity: 0;
+    }
+
+    nav.active .hamburger span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+    }
+}
+
+.messages-container {
+    position: fixed;
+    top: 100px;
+    /* Sub navbar */
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+}
+
+.alert {
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.95rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    animation: slideIn 0.5s ease-out forwards;
+    display: flex;
+    align-items: center;
+    border-left: 5px solid rgba(0, 0, 0, 0.2);
+}
+
+/* Stil pentru Succes (Verde - dar integrat in tema) */
+.alert-success {
+    background-color: rgba(46, 204, 113, 0.95);
+    border-color: #27ae60;
+}
+
+/* Stil pentru Eroare (Rosu) */
+.alert-error,
+.alert-warning {
+    background-color: rgba(231, 76, 60, 0.95);
+    border-color: #c0392b;
+}
+
+/* Stil pentru Info (Albastru/Auriu) */
+.alert-info {
+    background-color: rgba(212, 163, 115, 0.95);
+    /* Auriul temei */
+    border-color: #ba8b5e;
+    color: #1f1712;
+}
+
+/* Animatie de intrare */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

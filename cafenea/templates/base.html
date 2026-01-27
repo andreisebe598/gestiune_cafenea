@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Cafenea{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="{% url 'main' %}" class="logo">Cafeneaua Mea</a>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="{% url 'main' %}">Home</a></li>
+            <li><a href="{% url 'menu' %}">Meniu</a></li>
+            <li><a href="{% url 'about' %}">Despre</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+
+        <div class="btns">
+            {% if user.is_authenticated %}
+
+            <a href="{% url 'profil' %}" class="btn btn-outline">
+                Contul Meu
+            </a>
+
+            {% if user.is_staff or user.is_superuser %}
+            <a href="{% url 'dashboard' %}" class="btn btn-primary">Dashboard</a>
+            {% endif %}
+
+            <a href="{% url 'cart_detail' %}" class="btn btn-dark">
+                Coș
+            </a>
+
+            <form action="{% url 'logout' %}" method="post" style="width: 100%;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline" style="width: 100%;">
+                    Logout
+                </button>
+            </form>
+
+            {% else %}
+
+            <a href="{% url 'login' %}" style="width: 100%;">
+                <button class="btn btn-primary" style="width: 100%;">Login</button>
+            </a>
+
+            <a href="{% url 'register' %}" style="width: 100%;">
+                <button class="btn btn-outline" style="width: 100%;">Sign Up</button>
+            </a>
+
+            {% endif %}
+        </div>
+    </nav>
+
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        setTimeout(function () {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.style.opacity = '0';
+                alert.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 4000); 
+    </script>
+    {% endif %}
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Cafeneaua Mea. Toate drepturile rezervate.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const nav = document.querySelector('.navbar');
+            nav.classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>

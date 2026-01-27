@@ -1,0 +1,186 @@
+/* gestiune_stiri.css */
+
+.gestiune-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.gestiune-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-title {
+    color: #d4a373;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.btn-action {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-add {
+    background: #d4a373;
+    color: #1f1712;
+}
+
+.btn-add:hover {
+    background: #fff;
+    transform: translateY(-2px);
+}
+
+/* TABEL */
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid #3e2e28;
+}
+
+.coffee-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #2b1d16;
+    color: #a89f91;
+    min-width: 800px;
+}
+
+.coffee-table th {
+    background: #1f1712;
+    color: #d4a373;
+    padding: 15px;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #d4a373;
+}
+
+.coffee-table td {
+    padding: 15px;
+    border-bottom: 1px solid #3e2e28;
+    vertical-align: middle;
+}
+
+.coffee-table tr:hover {
+    background: #362822;
+}
+
+/* THUMBNAIL IMAGINE */
+.news-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #d4a373;
+}
+
+.no-image {
+    width: 60px;
+    height: 60px;
+    background: #1f1712;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Badge Status */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.active {
+    color: #2ecc71;
+    background: rgba(46, 204, 113, 0.1);
+}
+
+.inactive {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+}
+
+/* Actiuni */
+.actions-cell {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 5px;
+    border-radius: 5px;
+    transition: 0.2s;
+    text-decoration: none;
+}
+
+.btn-icon.edit:hover {
+    background: rgba(212, 163, 115, 0.2);
+}
+
+.btn-icon.delete:hover {
+    background: rgba(231, 76, 60, 0.2);
+}
+
+/* --- CLASE NOI (înlocuiesc stilurile inline) --- */
+
+/* Rand inactiv (semi-transparent) */
+.inactive-row {
+    opacity: 0.6;
+}
+
+/* Stiluri Celule */
+.title-cell {
+    font-weight: bold;
+    color: #f2e8dc;
+}
+
+.date-cell {
+    color: #d4a373;
+}
+
+.meta-cell {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Formular stergere (sa stea in linie cu butonul edit) */
+.delete-form {
+    display: inline;
+}
+
+/* Link Inapoi (josul paginii) */
+.back-link-container {
+    margin-top: 20px;
+}
+
+.back-link {
+    color: #d4a373;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.back-link:hover {
+    color: #fff;
+    text-decoration: underline;
+}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'gestiune_stiri.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="gestiune-container">
+    <div class="gestiune-header">
+        <h1 class="page-title">Panou Știri & Promoții</h1>
+        <a href="{% url 'adauga_stire' %}" class="btn-action btn-add">
+            + Adaugă Știre
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="coffee-table">
+            <thead>
+                <tr>
+                    <th>Imagine</th>
+                    <th>Titlu</th>
+                    <th>Data Eveniment</th>
+                    <th>Status</th>
+                    <th>Creat La</th>
+                    <th>Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stire in stiri %}
+                <tr class="{% if not stire.este_activa %}inactive-row{% endif %}">
+                    <td>
+                        {% if stire.imagine %}
+                        <img src="{{ stire.imagine.url }}" alt="Thumb" class="news-thumb">
+                        {% else %}
+                        <div class="no-image">Fără<br>Poză</div>
+                        {% endif %}
+                    </td>
+
+                    <td class="title-cell">{{ stire.titlu }}</td>
+
+                    <td class="date-cell">
+                        {{ stire.data_eveniment|date:"d M Y"|default:"-" }}
+                    </td>
+
+                    <td>
+                        {% if stire.este_activa %}
+                        <span class="status-badge active">Activ</span>
+                        {% else %}
+                        <span class="status-badge inactive">Inactiv</span>
+                        {% endif %}
+                    </td>
+
+                    <td class="meta-cell">
+                        {{ stire.creat_la|date:"d.m.Y" }}
+                    </td>
+
+                    <td class="actions-cell">
+                        <a href="{% url 'modifica_stire' stire.id %}" class="btn-icon edit" title="Editează">
+                            ✏️
+                        </a>
+
+                        <form action="{% url 'sterge_stire' stire.id %}" method="post" class="delete-form"
+                            onsubmit="return confirm('Ștergi știrea {{ stire.titlu }}?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon delete" title="Șterge">
+                                🗑️
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 20px;">Nu există știri publicate.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="back-link-container">
+        <a href="{% url 'dashboard' %}" class="back-link">&larr; Înapoi la Dashboard</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'adauga_angajat.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="page-title">Angajează un nou Barista</h2>
+    <p style="text-align: center; color: #a89f91; margin-bottom: 20px;">
+        Completează detaliile noului membru al echipei.
+    </p>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-row">
+            <div class="form-group half">
+                <label>Nume</label>
+                {{ form.nume }}
+            </div>
+            <div class="form-group half">
+                <label>Prenume</label>
+                {{ form.prenume }}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group half">
+                <label>Funcție</label>
+                {{ form.functie }}
+            </div>
+            <div class="form-group half">
+                <label>Salariu (RON)</label>
+                {{ form.salariu }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            {{ form.email }}
+        </div>
+
+        <div class="form-group">
+            <label>Telefon</label>
+            {{ form.telefon }}
+        </div>
+
+        <div class="form-row">
+            <div class="form-group half">
+                <label>Data Angajării</label>
+                {{ form.data_angajarii }}
+            </div>
+            <div class="form-group half">
+                <label>Data Nașterii</label>
+                {{ form.data_nasterii }}
+            </div>
+        </div>
+
+        <button type="submit" class="btn-save">Salvează Angajatul</button>
+    </form>
+</div>
+{% endblock %}
