@@ -1,20 +1,25 @@
- # ☕ Sistem de Management pentru Cafenea
+# ☕ Sistem de Management pentru Cafenea
 
-Un sistem web complet pentru gestionarea operațiunilor unei cafenele moderne, dezvoltat cu Django. Aplicația acoperă tot ce ține de managementul inventarului, comenzilor clienților și administrarea personalului.
+Un sistem web complet pentru gestionarea operațiunilor unei cafenene moderne, dezvoltat cu Django. Aplicația acoperă tot ce ține de managementul inventarului, comenzilor clienților și administrarea personalului.
 
 ## 📋 Cuprins
 
-- [Despre Proiect](#despre-proiect)
-- [Funcționalități](#funcționalități)
-- [Tehnologii Utilizate](#tehnologii-utilizate)
-- [Instalare](#instalare)
-- [Configurare](#configurare)
-- [Utilizare](#utilizare)
-- [Structura Proiectului](#structura-proiectului)
-- [Modele de Date](#modele-de-date)
-- [Capturi de Ecran](#capturi-de-ecran)
-- [Contribuții](#contribuții)
-- [Licență](#licență)
+- [Despre Proiect](#-despre-proiect)
+- [Funcționalități](#-funcționalități)
+- [Tehnologii Utilizate](#-tehnologii-utilizate)
+- [Instalare](#-instalare)
+- [Configurare](#%EF%B8%8F-configurare)
+- [Utilizare](#-utilizare)
+- [Structura Proiectului](#-structura-proiectului)
+- [Modele de Date](#-modele-de-date)
+- [Securitate & Permisiuni](#-securitate--permisiuni)
+- [Features Avansate](#-features-avansate)
+- [Rapoarte & Analytics](#-rapoarte--analytics)
+- [Design & UX](#-design--ux)
+- [Testing](#-testing)
+- [Îmbunătățiri Viitoare](#-îmbunătățiri-viitoare)
+- [Contribuții](#-contribuții)
+- [Autor](#-autor)
 
 ## 🎯 Despre Proiect
 
@@ -389,16 +394,16 @@ Sistem complet de mesaje Django pentru feedback:
 
 ### Manual Testing Checklist
 
-- [ ] Înregistrare utilizator nou
-- [ ] Login/Logout
-- [ ] Resetare parolă
-- [ ] Adăugare produse în coș
-- [ ] Plasare comandă
-- [ ] Verificare scădere stoc
-- [ ] Acces dashboard ca admin
-- [ ] CRUD operații pentru fiecare model
-- [ ] Formulare de contact
-- [ ] Publicare știri
+- [x] Înregistrare utilizator nou
+- [x] Login/Logout
+- [x] Resetare parolă
+- [x] Adăugare produse în coș
+- [x] Plasare comandă
+- [x] Verificare scădere stoc
+- [x] Acces dashboard ca admin
+- [x] CRUD operații pentru fiecare model
+- [x] Formulare de contact
+- [x] Publicare știri
 
 ### Test Scenarios
 
@@ -439,16 +444,12 @@ Contribuțiile sunt binevenite! Dacă dorești să contribui:
 - Testează toate modificările înainte de commit
 - Actualizează documentația când este necesar
 
-## 📝 Licență
-
-Acest proiect este licențiat sub MIT License - vezi fișierul [LICENSE](LICENSE) pentru detalii.
-
 ## 👤 Autor
 
-**Numele Tău**
-- GitHub: [@username](https://github.com/username)
-- LinkedIn: [Numele Tău](https://linkedin.com/in/username)
-- Email: email@example.com
+**Andrei-Cristian Sebe**
+- GitHub: [@andreisebe598](https://github.com/andreisebe598)
+- LinkedIn: [Andrei-Cristian Sebe](https://www.linkedin.com/in/andrei-sebe-816b65275/)
+- Email: andreisebe598@gmail.com
 
 ## 🙏 Mulțumiri
 
