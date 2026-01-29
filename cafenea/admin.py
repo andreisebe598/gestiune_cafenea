@@ -64,7 +64,7 @@ class ComandaAdmin(admin.ModelAdmin):
 @admin.register(Stire)
 class StireAdmin(admin.ModelAdmin):
     list_display = ('titlu', 'este_activa', 'data_eveniment', 'creat_la',)
-    list_editable = ('este_activa',)
+    list_editable = ('este_activa',) #Permite editarea direct in tabel
     list_filter = ('este_activa', 'creat_la',)
     search_fields = ('titlu', 'continut',)
 
@@ -73,4 +73,5 @@ class MesajContactAdmin(admin.ModelAdmin):
     list_display = ('nume', 'email', 'subiect', 'data_trimiterii',)
     list_filter = ('data_trimiterii',)
     search_fields = ('nume', 'email', 'subiect', 'mesaj',)
+    #Campuri readonly pentru a pastra integritatea mesajelor
     readonly_fields = ('nume', 'email', 'subiect', 'mesaj', 'data_trimiterii',)
