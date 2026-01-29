@@ -1,3 +1,23 @@
+"""
+Modul ce defineste structura bazei de date si regulile fundamnetale ale aplicatiei. Modelele sunt interconectate pentru a gestiona fluxul de date complet: Stoc -> Personal -> Clienti -> Vanzari
+
+Aspecte Cheie:
+1. **Gestiunea inteligenta a produselor:**
+        - Autocategorisire: Metoda save() este suprascrisa pentru a detecta automat categoria bazat pe numele produsului 
+        - Structura ierarhica: Foloseste tuple imbricate in 'DENUMIRE_CHOICES' pentru a grupa produsele logic in interfata de administrare
+2. **Sistem inteligent de comenzi:**
+        - Relatia 'Comanda' -> 'ElementComanda'
+        - Validarea stocului: Nu permite salvarea unei linii daca cantitatea ceruta depaseste stocul disponibil
+        - Scaderea automata: La salvarea ElementComanda, cantitatea este scazuta automat din stocul 'Produsului'
+3. **Extensia profilului user:**
+        - Implementeaza relatia de tip 1-la-1 cu modelul standard Django 'User'
+        - Campuri calculate: Propritatea 'varsta' este calculata automat in functie de data nasterii
+        - Filtrare relationala: Campul 'bautura_preferata' exclude automat produsele din categoria 'Dulciuri' folosind 'Q objects'
+4. **Sistem de resurse umane:**
+        - Gestioneaza starea angajatului (Activ/Inactiv) printr-un boolean, pastrand istoricul angajatilor chiar si dupa plecarea acestora
+"""
+
+
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
@@ -14,13 +34,11 @@ class Angajat(models.Model):
         ('Director', 'Director')
     ]
 
-    #Date personale
     nume=models.CharField(max_length=100)
     prenume=models.CharField(max_length=100)
     functie=models.CharField(max_length=100, choices=FUNCTII)
     salariu=models.DecimalField(max_digits=10, decimal_places=2)
 
-    #date de contact
     email = models.EmailField(unique=True, null=True, blank=True)
     telefon = models.CharField(max_length=15, unique=True, null=True, blank=True)
 
@@ -85,6 +103,7 @@ class Produs(models.Model):
     cantitate = models.IntegerField(default=0) 
 
     def save(self, *args, **kwargs):
+        """La salvare, determina automat categoria produsului pe baza denumirii selectate"""
         for cat_nume, produse_tuple in self.DENUMIRE_CHOICES:
             nume_produse = [p[0] for p in produse_tuple]
             if self.denumire in nume_produse:
@@ -99,51 +118,8 @@ class Produs(models.Model):
         verbose_name_plural = 'Produse'
 
 # ==================== MODEL CLIENT ====================
-
-# class Client(models.Model):
-
-#     GENURI = [
-#         ('Masculin', 'Masculin'),
-#         ('Feminin', 'Feminin'),
-#         ('Nespecificat', 'Nespecificat'),
-#     ]
-
-#     nume = models.CharField(max_length=100)
-#     gen = models.CharField(max_length=20, choices=GENURI)
-#     data_nasterii = models.DateField(null=True, blank=True)
-
-#     bautura_preferata = models.ForeignKey(
-#         'Produs',
-#         on_delete=models.SET_NULL,
-#         null=True,
-#         blank=True,
-#         related_name='fani',
-#         limit_choices_to=~Q(categorie='Dulciuri')
-#     )
-
-#     data_inregistrarii = models.DateTimeField(auto_now_add=True)
-
-#     @property
-#     def varsta(self):
-#         if self.data_nasterii:
-#             today = timezone.now().date()
-#             return today.year - self.data_nasterii.year - (
-#                 (today.month, today.day) < (self.data_nasterii.month, self.data_nasterii.day)
-#             )
-#         return "N/A"
-    
-
-#     def __str__(self):
-#         return f"{self.nume} ({self.gen}, {self.varsta} ani ) -> {self.bautura_preferata}"
-
-
-
-#     class Meta:
-#         verbose_name_plural = 'Clienti'
-
 class Client(models.Model):
-    # === MODIFICARE: Legătura cu User-ul de Login ===
-    # on_delete=CASCADE înseamnă că dacă ștergi User-ul, se șterge și profilul de Client
+    """on_delete = CASCADE inseamna ca daca stergi userul se sterge si profilul de Client"""
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
 
     GENURI = [
@@ -154,7 +130,6 @@ class Client(models.Model):
 
     nume = models.CharField(max_length=100)
     
-    # === MODIFICARE: Am adăugat default='Nespecificat' pentru înregistrare rapidă ===
     gen = models.CharField(max_length=20, choices=GENURI, default='Nespecificat')
     
     data_nasterii = models.DateField(null=True, blank=True)
@@ -165,13 +140,14 @@ class Client(models.Model):
         null=True,
         blank=True,
         related_name='fani',
-        limit_choices_to=~Q(categorie='Dulciuri')
+        limit_choices_to=~Q(categorie='Dulciuri') # Nu permite selectarea dulciurilor
     )
 
     data_inregistrarii = models.DateTimeField(auto_now_add=True)
 
     @property
     def varsta(self):
+        """Calculeaza varsta curenta in functie de data_nasterii"""
         if self.data_nasterii:
             today = timezone.now().date()
             return today.year - self.data_nasterii.year - (
@@ -180,7 +156,6 @@ class Client(models.Model):
         return "N/A"
     
     def __str__(self):
-        # Am actualizat __str__ sa arate si userul daca exista
         user_str = f" [User: {self.user.username}]" if self.user else ""
         return f"{self.nume}{user_str} ({self.gen}, {self.varsta} ani) -> {self.bautura_preferata}"
 
@@ -209,6 +184,7 @@ class ElementComanda(models.Model):
     cantitate = models.PositiveIntegerField(default=1)
 
     def clean(self):
+        """Validare: nu permite salvarea daca stocul e insuficient"""
         if not self.pk:
             if self.produs.cantitate < self.cantitate:
                 raise ValidationError({
@@ -220,10 +196,8 @@ class ElementComanda(models.Model):
         return self.produs.pret_vanzare * self.cantitate
     
     def save(self, *args, **kwargs):
+        """La salvare (creare) scade automat cantitatea din stoc"""
         if not self.pk:
-            # if self.produs.cantitate < self.cantitate:
-            #     raise ValidationError(f"Stoc insuficient pentru {self.produs.denumire}")
-            
             self.produs.cantitate -= self.cantitate
             self.produs.save()
 
