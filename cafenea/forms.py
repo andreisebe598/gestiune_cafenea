@@ -1,9 +1,25 @@
+"""
+Fisier ce defineste structura tuturor formularelor utilizare, asigurand validarea datelor introduse de utilizatori
+
+Aspecte Cheie:
+1. **Stilizare (Widgets):** - Toate formularele suprascriu widget-urile implicite Django pentru a adauga clase CSS personalizate
+                            - Asigura integrarea vizuala cu framework-ul CSS
+2. **Extinderea inregistrarii:** - ClientRegistrationForm mosteneste UserCreationForm dar forteaza completarea campurilor 'first_name', 'last_name', si 'email', 
+care sunt optionale in mod implicit
+3. **Gestionarea profilului:** - Editarea profilului este distribuita in 2 formulare distincte:
+                                    - UserUpdateForm pentru datele de autentificare (username, email, nume, prenume)
+                                    - ClientUpdateForm pentru datele personale (data nasterii, gen, bautura preferata)
+4. **Experienta utilizatorului:** - Utilizeaza type='date' pentru campurile de data, activand astfel selectorul de calendar din browser
+"""
+
+
 from django import forms
 from .models import Produs, Client, Angajat, Stire
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 class ContactForm(forms.Form):
+    """Formular simplu pentru pagina de contact care nu se salveaza direct in DB, doar valideaza"""
     nume = forms.CharField(
         max_length=100,
         widget=forms.TextInput(attrs={'placeholder': 'Numele tau', 'class': 'form-input'})
@@ -20,6 +36,7 @@ class ContactForm(forms.Form):
     )
     
 class ProdusForm(forms.ModelForm):
+    """Formular folosit pentru gestiunea produselor"""
     class Meta:
         model = Produs
         fields = ['denumire', 'pret_vanzare', 'cost_achizitie', 'cantitate']
@@ -31,6 +48,7 @@ class ProdusForm(forms.ModelForm):
         }
 
 class ClientRegisterForm(UserCreationForm):
+    """Formular custom de inregistrare ce adauga campuri obligatorii (Nume, Prenume, Email) peste UserCreationForm nativ"""
     last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Nume (ex: Popescu)'}))
     first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Prenume (ex: Ion)'}))
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Adresa de Email'}))
@@ -40,12 +58,14 @@ class ClientRegisterForm(UserCreationForm):
         fields = ['username', 'last_name', 'first_name', 'email']
 
     def __init__(self, *args, **kwargs):
+        """Injecteaza clasa CSS 'form-input' in toate campurile, inclusiv cele native (mostenite)"""
         super(ClientRegisterForm, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-input'})
 
 
 class UserUpdateForm(forms.ModelForm):
+    """Formular pentru actualizarea informatiilor de autentificare ale unui client"""
     first_name = forms.CharField(label="Prenume", widget=forms.TextInput(attrs={'class': 'form-input'}))
     last_name = forms.CharField(label="Nume", widget=forms.TextInput(attrs={'class': 'form-input'}))
     email = forms.EmailField(label="Email", widget=forms.EmailInput(attrs={'class': 'form-input'}))
