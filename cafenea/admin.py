@@ -1,3 +1,17 @@
+'''
+Modul ce defineste modul in care modelele aplicatiei sunt inregistrate, vizualizate si gestionate in panoul de administrare Django. Include personalizari pentru raporare rapida si
+aspect vizual palcut, editare in lista si protectie a datelor
+
+Aspecte Cheie:
+1. **Indicatori vizuali:** - Metoda status_stoc adauga iconite vizuale direct in lista pentru aspect si identificare mai usoara, include de asemenea un script custom "ls/auto_categorie.js'
+pentru selectarea automata a categoriei in pagina de administrare Django
+2. **Gestionarea Master - Detail:** - Este utilizat 'ElementComandaInLine' (TabularInLine) pentru a permite vizualiarea si adaugarea produselor intr-o comanda direct din pagina comenzii
+fara a mai trebui selectata si o categorie separata
+3. **Editarea rapida:** - Permite modificarea statusului 'este_activa' din cadrul metodei StireAdmin direct din lista de stiri, eficientizand astfel fluxul de publicare/ascundere al stirilor
+4. **Imutabilitate:** - Toate campurile din 'MesajContact' sunt readonl. Lucru care trasnforma interfata intr-un log de audit, prevenind modificarea ccidentala a mesajelor primite de la clienti.
+5. **Valori calculate:** - Afiseaza campuri calculate care nu exista direct in baza de date ( precum 'total_afisat' )
+'''
+
 from django.contrib import admin
 from .models import Angajat, Produs, Client, Comanda, ElementComanda, Stire, MesajContact
 
