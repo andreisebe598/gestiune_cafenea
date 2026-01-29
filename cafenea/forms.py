@@ -80,6 +80,7 @@ class AngajatForm(forms.ModelForm):
             'este_angajat': forms.CheckboxInput(attrs={'class': 'form-checkbox'}),
         }
 
+
 class StireForm(forms.ModelForm):
     class Meta:
         model = Stire

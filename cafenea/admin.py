@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Angajat, Produs, Client, Comanda, ElementComanda, Stire, MesajContact
 
-# Register your models here.
 @admin.register(Angajat)
 class AngajatAdmin(admin.ModelAdmin):
     list_display = ('nume', 'prenume', 'functie', 'salariu', 'data_angajarii', 'este_angajat')

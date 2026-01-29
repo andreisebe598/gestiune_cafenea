@@ -1,3 +1,5 @@
+# The `Cart` class manages a shopping cart for a Django web application, allowing users to add,
+# remove, and view products with their quantities and prices.
 from decimal import Decimal
 from django.conf import settings
 from .models import Produs
