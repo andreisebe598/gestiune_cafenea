@@ -1,3 +1,23 @@
+"""
+Modul care reprezinta 'creierul' aplicatiei gestionand request-urile http, interactiunea cu DB si randarea template-urilor html
+
+Zona impartita in 2:
+    a. Zona publica: Pagini accesibile tuturor ( Meniu, Contact, Home ) sau utilizatorilor autentificati
+    b. Zona administrativa: Accesibila doar managerilor, pentru gestiunea stocurilor, angajatilor si vizualizarea rapoartelor
+
+Aspecte Cheie:
+1. **Securitate:**
+        - Utilizeaza decoratorul '@user_passes_test(este_manager)' pentru a bloca accesul utilizatorilor obisnuiti la functiile de administrare
+        - Functia 'este_manager' verifica flag-urile 'is_staff' sau 'is_superuser'
+2. **Tranzitia sesiune -> baza de date:**
+        - Functia 'checkout' transforma obiectele temporare din 'Cart' (sesiune) in inregistrari permanente 'Comanda' si 'ElementComanda'
+        - Include validarea de stoc inainte de finalizare
+3. **Analiza si rapoarte:**
+        - Foloseste functii de agregare SQL pentru a calcula performanta financiara in timp real fara a itera prin inregistrari
+4. **Gestionarea formularelor compelxe:**
+        - View-ul 'profil' gestioneaza 2 formulare simultan ('UserUpdateForm' si 'ClientUpdateForm') pentru a actualiza date in 2 tabele diferite
+"""
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Sum, F, Count, Q
 from django.contrib import messages
@@ -19,6 +39,12 @@ def base(request):
 
 # pagina principala a site-ului
 def main(request):
+
+    """
+    Landing Page / Pagina de pornire
+    Afiseaza ultimele stiri active
+    """
+
     # preia ultimele 3 stiri active pentru a le afisa pe prima pagina
     stiri = Stire.objects.filter(este_activa=True)[:3]
     # preia primul produs din categoria 'cafele' pentru a-l afisa ca produs vedeta
@@ -32,6 +58,11 @@ def main(request):
 
 # pagina de meniu cu toate produsele
 def menu(request):
+
+    """
+    Pagina meniului. Catalogul complet de produse organizat pentru afisare in front-end
+    """
+    
     # preia toate produsele din baza de date
     produse = Produs.objects.all()
     # defineste categoriile manual pentru iterare in template
@@ -55,6 +86,9 @@ def about(request):
 
 # pagina de contact cu formular
 def contact(request):
+    """
+    Gestioneaza trimiterea mesajelor de contact catre baza de date
+    """
     # verifica daca formularul a fost trimis prin metoda post
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -80,6 +114,11 @@ def contact(request):
 
 # inregistrare utilizator nou
 def register(request):
+
+    """
+    Gestioneaza inregistrarea si autentificarea automata post-inregistrare
+    """
+
     if request.method == 'POST':
         form = ClientRegisterForm(request.POST)
         if form.is_valid():
@@ -98,6 +137,9 @@ def register(request):
 # pagina de profil a utilizatorului
 @login_required
 def profil(request):
+    """
+    Pagina pentru gestionarea profilului utilizatorului. Actualizeaza simultan User (Auth) si Client
+    """
     try:
         # incearca sa obtina profilul de client existent
         client_existent = request.user.client
@@ -167,6 +209,14 @@ def cart_detail(request):
 # finalizare comanda
 @login_required
 def checkout(request):
+
+    """
+    Proceseaza comanda
+    1. Verifica stocul
+    2. Creeaza inregistrarea in DB
+    3. Transfera itemele din Session in DB
+    4. Goleste cosul
+    """
     cart = Cart(request)
     
     # verifica daca cosul este gol
@@ -220,6 +270,11 @@ def checkout(request):
 @login_required
 @user_passes_test(este_manager)
 def dashboard_rapoarte(request):
+
+    """
+    Gestioneaza statistici si rapoarte financiare    
+    """
+    
     # calculeaza total incasari si cheltuieli folosind agregari
     date_financiare = ElementComanda.objects.aggregate(
         total_incasari = Sum(F('cantitate') * F('produs__pret_vanzare')),
@@ -268,6 +323,9 @@ def lista_gestiune_produse(request):
 @login_required
 @user_passes_test(este_manager)
 def adauga_produs(request):
+    """
+    Adauga un produs nou sau actualizeaza stocul unui produs existent
+    """
     if request.method == 'POST':
         form = ProdusForm(request.POST)
         if form.is_valid():
@@ -383,6 +441,10 @@ def sterge_angajat(request, pk):
 @login_required
 @user_passes_test(este_manager)
 def lista_gestiune_comenzi(request):
+
+    """
+    Afiseaza istoricul comenzilor. Include functionalitate de Search dupa ID sau nume 
+    """
     # preia toate comenzile ordonate descrescator dupa data
     comenzi = Comanda.objects.all().order_by('-data_comenzii')
     
